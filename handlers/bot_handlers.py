@@ -2,6 +2,7 @@ from dispatcher import dp, bot
 from aiogram.filters.command import Command
 from aiogram import types
 from aiogram import F
+from data import add_group
 
 
 # Обработчик события добавления бота в группу
@@ -12,3 +13,8 @@ async def on_chat_member_added(event: types.ChatMemberUpdated):
     # Проверяем, является ли бот добавленным пользователем
     if event.new_chat_member["username"] == bot_info.username:
         await event.reply("Привет! Я добавлен в эту группу.")
+        is_group_added = add_group(event.chat.id)
+
+        if is_group_added:
+            # запускаем воркера
+            pass
