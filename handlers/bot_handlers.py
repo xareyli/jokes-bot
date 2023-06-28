@@ -18,9 +18,9 @@ async def on_chat_member_added(event: types.ChatMemberUpdated):
     # Проверяем, является ли бот добавленным пользователем
     if event.new_chat_member["username"] == bot_info.username:
         await event.reply("Привет! Я добавлен в эту группу.")
-        # is_group_added = add_group(event.chat.id)
+        is_group_added = add_group(event.chat.id)
 
-        if True:
+        if is_group_added:
             schedule_task(event.chat.id, send_anekdot, 3, event.chat.id)
 
 
