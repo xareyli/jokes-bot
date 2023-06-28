@@ -21,7 +21,7 @@ async def on_chat_member_added(event: types.ChatMemberUpdated):
         is_group_added = add_group(event.chat.id)
 
         if is_group_added:
-            schedule_task(send_anekdot, 3, event.chat.id)
+            schedule_task(event.chat.id, send_anekdot, 3, event.chat.id)
 
 
 @dp.message(Command('set_hours'))
