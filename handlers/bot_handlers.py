@@ -2,7 +2,7 @@ from dispatcher import dp, bot
 from aiogram.filters.command import Command
 from aiogram import types
 from aiogram import F
-from data import add_group
+from data import add_group, update_group_publish_frequency
 from scheduler import schedule_task
 
 
@@ -22,3 +22,25 @@ async def on_chat_member_added(event: types.ChatMemberUpdated):
 
         if is_group_added:
             schedule_task(send_anekdot, 3, event.chat.id)
+
+
+@dp.message(Command('set_hours'))
+async def on_set_hours(message: types.Message):
+    hours = message.text.split('/set_hours ')[-1]
+
+    try:
+        hours = int(hours)
+
+        if not hours or hours > 12 or hours < 1:
+            await message.reply('Некорректное значение интервала')
+            return False
+    except:
+        await message.reply('Некорректное значение интервала')
+        return False
+
+    is_updated = update_group_publish_frequency(message.chat.id, hours)
+
+    if is_updated:
+        await message.reply('Интервал успешно обновлён')
+    else:
+        await message.reply('Произошла ошибка. Интервал не обновлён')

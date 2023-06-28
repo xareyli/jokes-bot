@@ -5,11 +5,13 @@ scheduler = AsyncIOScheduler()
 
 _started = False
 
+workers = {}
 
-def schedule_task(fn, once_in, *args):
+
+def schedule_task(task_id, fn, once_in, *args):
     global _started
 
-    scheduler.add_job(fn, "interval", hours=once_in, args=args)
+    workers[str(task_id)] = scheduler.add_job(fn, "interval", hours=once_in, args=args)
 
     if not _started:
         scheduler.start()
