@@ -3,6 +3,11 @@ from aiogram.filters.command import Command
 from aiogram import types
 from aiogram import F
 from data import add_group
+from scheduler import schedule_task
+
+
+async def send_anekdot(group_id):
+    await bot.send_message(group_id, "tipa anekdot")
 
 
 # Обработчик события добавления бота в группу
@@ -16,5 +21,4 @@ async def on_chat_member_added(event: types.ChatMemberUpdated):
         is_group_added = add_group(event.chat.id)
 
         if is_group_added:
-            # запускаем воркера
-            pass
+            schedule_task(send_anekdot, 3, event.chat.id)
