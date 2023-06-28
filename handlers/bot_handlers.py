@@ -3,7 +3,7 @@ from aiogram.filters.command import Command
 from aiogram import types
 from aiogram import F
 from data import add_group, update_group_publish_frequency
-from scheduler import schedule_task
+from scheduler import schedule_task, update_worker_interval
 
 
 async def send_anekdot(group_id):
@@ -18,9 +18,9 @@ async def on_chat_member_added(event: types.ChatMemberUpdated):
     # Проверяем, является ли бот добавленным пользователем
     if event.new_chat_member["username"] == bot_info.username:
         await event.reply("Привет! Я добавлен в эту группу.")
-        is_group_added = add_group(event.chat.id)
+        # is_group_added = add_group(event.chat.id)
 
-        if is_group_added:
+        if True:
             schedule_task(event.chat.id, send_anekdot, 3, event.chat.id)
 
 
@@ -41,6 +41,8 @@ async def on_set_hours(message: types.Message):
     is_updated = update_group_publish_frequency(message.chat.id, hours)
 
     if is_updated:
+        update_worker_interval(message.chat.id, hours)
+
         await message.reply('Интервал успешно обновлён')
     else:
         await message.reply('Произошла ошибка. Интервал не обновлён')
