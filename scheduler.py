@@ -1,7 +1,7 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 
-scheduler = AsyncIOScheduler()
+scheduler = AsyncIOScheduler({'apscheduler.job_defaults.max_instances': 10})
 
 _started = False
 
