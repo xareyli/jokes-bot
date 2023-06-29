@@ -26,3 +26,10 @@ def update_worker_interval(worker_id, new_hours):
         schedule_task(worker_id, worker[1], new_hours, *worker[2])
     except:
         return False
+
+
+def terminate_worker(worker_id):
+    try:
+        workers[str(worker_id)][0].remove()
+    except Exception as e:
+        return False
