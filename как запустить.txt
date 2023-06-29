@@ -1,0 +1,7 @@
+Убедитесь что у вас установлена 3.11 версия python
+
+Запустите следующие команды:
+
+    python -m venv venv
+    pip install -r requirements.txt
+    python main.py
