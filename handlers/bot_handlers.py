@@ -38,18 +38,19 @@ async def handle_bot_left(event: types.ChatMemberUpdated):
         delete_group(chat_id)
         terminate_worker(chat_id)
 
-@dp.message(Command('set_hours'))
+
+@dp.message(Command("set_hours"))
 async def on_set_hours(message: types.Message):
-    hours = message.text.split('/set_hours ')[-1]
+    hours = message.text.split("/set_hours ")[-1]
 
     try:
         hours = int(hours)
 
         if not hours or hours > 12 or hours < 1:
-            await message.reply('Некорректное значение интервала')
+            await message.reply("Некорректное значение интервала")
             return False
     except:
-        await message.reply('Некорректное значение интервала')
+        await message.reply("Некорректное значение интервала")
         return False
 
     is_updated = update_group_publish_frequency(message.chat.id, hours)
@@ -57,6 +58,6 @@ async def on_set_hours(message: types.Message):
     if is_updated:
         update_worker_interval(message.chat.id, hours)
 
-        await message.reply('Интервал успешно обновлён')
+        await message.reply("Интервал успешно обновлён")
     else:
-        await message.reply('Произошла ошибка. Интервал не обновлён')
+        await message.reply("Произошла ошибка. Интервал не обновлён")

@@ -11,10 +11,14 @@ def add_group(group_id):
 
 def update_group_publish_frequency(group_id, new_hours):
     try:
-        db.execute_query("UPDATE groups SET publish_frequency = ? WHERE chat_id = ?", (new_hours, group_id))
+        db.execute_query(
+            "UPDATE groups SET publish_frequency = ? WHERE chat_id = ?",
+            (new_hours, group_id),
+        )
         return True
     except:
         return False
+
 
 def get_all_groups():
     try:
@@ -22,8 +26,9 @@ def get_all_groups():
     except:
         return ()
 
+
 def delete_group(group_id):
     try:
-        return db.execute_query("DELETE FROM groups WHERE chat_id = ?", (group_id, ))
+        return db.execute_query("DELETE FROM groups WHERE chat_id = ?", (group_id,))
     except:
         return False
