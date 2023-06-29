@@ -4,10 +4,18 @@ from aiogram import types
 from aiogram import F
 from data import add_group, update_group_publish_frequency, delete_group
 from scheduler import schedule_task, update_worker_interval, terminate_worker
+from jokes import get_random_joke
 
 
 async def send_anekdot(group_id):
-    await bot.send_message(group_id, "tipa anekdot")
+    joke = get_random_joke()
+
+    if joke:
+        await bot.send_message(group_id, joke)
+    else:
+        await bot.send_message(
+            group_id, "Чёт я начал барахлить, напишите пожалуйста моему разработчику"
+        )
 
 
 # Обработчик события добавления бота в группу
