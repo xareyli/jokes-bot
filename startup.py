@@ -7,7 +7,8 @@ from dispatcher import bot
 async def startup_hook():
     groups = get_all_groups()
 
-    bot_id = (await bot.get_me()).id
+    bot_info = await bot.get_me()
+    bot_id = bot_info.id
 
     for group in groups:
         try:
