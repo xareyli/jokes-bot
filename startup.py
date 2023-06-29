@@ -23,4 +23,4 @@ async def startup_hook():
             await asyncio.sleep(conf.scheduler.workers_startup_delay)
         except:
             # бота удалили
-            print(delete_group(group[1]))
+            delete_group(group[1])
