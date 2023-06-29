@@ -3,6 +3,7 @@ from handlers.bot_handlers import send_anekdot
 from scheduler import schedule_task
 from dispatcher import bot
 import asyncio
+from config import conf
 
 
 async def startup_hook():
@@ -19,7 +20,7 @@ async def startup_hook():
             schedule_task(group[1], send_anekdot, group[2], group[1])
 
             # задержка 3 секунды перед запуском следующего воркера
-            await asyncio.sleep(3)
+            await asyncio.sleep(conf.scheduler.workers_startup_delay)
         except:
             # бота удалили
             print(delete_group(group[1]))
